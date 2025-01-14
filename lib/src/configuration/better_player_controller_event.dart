@@ -1,5 +1,8 @@
 ///Internal events of BetterPlayerController, used in widgets to update state.
 enum BetterPlayerControllerEvent {
+  /// Overridded ui (e.g fit, aspect ratio)
+  overriddenUi,
+
   ///Fullscreen mode has started.
   openFullscreen,
 
