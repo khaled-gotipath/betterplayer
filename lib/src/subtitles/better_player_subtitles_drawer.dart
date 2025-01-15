@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:better_player/better_player.dart';
 import 'package:better_player/src/subtitles/better_player_subtitle.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _BetterPlayerSubtitlesDrawerState
 
   VideoPlayerValue? _latestValue;
   BetterPlayerSubtitlesConfiguration? _configuration;
-  bool _playerVisible = false;
+  bool _controlsVisible = false;
 
   ///Stream used to detect if play controls are visible or not
   late StreamSubscription _visibilityStreamSubscription;
@@ -43,7 +44,7 @@ class _BetterPlayerSubtitlesDrawerState
     _visibilityStreamSubscription =
         widget.playerVisibilityStream.listen((state) {
       setState(() {
-        _playerVisible = state;
+        _controlsVisible = state;
       });
     });
 
@@ -98,20 +99,15 @@ class _BetterPlayerSubtitlesDrawerState
     final List<Widget> textWidgets =
         subtitles.map((text) => _buildSubtitleTextWidget(text)).toList();
 
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.only(
-            bottom: _playerVisible
-                ? _configuration!.bottomPadding + 30
-                : _configuration!.bottomPadding,
-            left: _configuration!.leftPadding,
-            right: _configuration!.rightPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: textWidgets,
-        ),
+    return Padding(
+      padding: _configuration!.outerPadding.copyWith(
+        bottom: _controlsVisible
+            ? _configuration!.outerPadding.bottom + 24
+            : _configuration!.outerPadding.bottom,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: textWidgets,
       ),
     );
   }
@@ -143,16 +139,19 @@ class _BetterPlayerSubtitlesDrawerState
   }
 
   Widget _getTextWithStroke(String subtitleText) {
-    return Container(
-      color: _configuration!.backgroundColor,
-      child: Stack(
-        children: [
-          if (_configuration!.outlineEnabled)
-            _buildHtmlWidget(subtitleText, _outerTextStyle)
-          else
-            const SizedBox(),
-          _buildHtmlWidget(subtitleText, _innerTextStyle)
-        ],
+    return DecoratedBox(
+      decoration: _configuration!.bgDecoration,
+      child: Padding(
+        padding: _configuration!.innerPadding,
+        child: Stack(
+          children: [
+            if (_configuration!.outlineEnabled)
+              _buildHtmlWidget(subtitleText, _outerTextStyle)
+            else
+              const SizedBox(),
+            _buildHtmlWidget(subtitleText, _innerTextStyle)
+          ],
+        ),
       ),
     );
   }

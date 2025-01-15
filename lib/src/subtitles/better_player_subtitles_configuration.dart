@@ -22,20 +22,17 @@ class BetterPlayerSubtitlesConfiguration {
   ///Font family of the subtitle
   final String fontFamily;
 
-  ///Left padding of the subtitle
-  final double leftPadding;
+  ///Inner padding of the subtitle
+  final EdgeInsets innerPadding;
 
-  ///Right padding of the subtitle
-  final double rightPadding;
-
-  ///Bottom padding of the subtitle
-  final double bottomPadding;
+  ///Outer padding of the subtitle
+  final EdgeInsets outerPadding;
 
   ///Alignment of the subtitle
   final Alignment alignment;
 
-  ///Background color of the subtitle
-  final Color backgroundColor;
+  ///Background style of the subtitle
+  final BoxDecoration bgDecoration;
 
   const BetterPlayerSubtitlesConfiguration({
     this.fontSize = 14,
@@ -44,10 +41,9 @@ class BetterPlayerSubtitlesConfiguration {
     this.outlineColor = Colors.black,
     this.outlineSize = 2.0,
     this.fontFamily = "Roboto",
-    this.leftPadding = 8.0,
-    this.rightPadding = 8.0,
-    this.bottomPadding = 20.0,
+    this.innerPadding = const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+    this.outerPadding = const EdgeInsets.only(bottom: 10),
     this.alignment = Alignment.center,
-    this.backgroundColor = Colors.transparent,
+    this.bgDecoration = const BoxDecoration(),
   });
 }
