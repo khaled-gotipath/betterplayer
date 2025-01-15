@@ -77,7 +77,7 @@ class BetterPlayerControlsConfiguration {
 
   ///Parameter used to build custom controls
   final Widget Function(BetterPlayerController controller,
-      Function(bool) onPlayerVisibilityChanged)? customControlsBuilder;
+      void Function(bool) onPlayerVisibilityChanged)? customControlsBuilder;
 
   ///Parameter used to change theme of the player
   final BetterPlayerTheme? playerTheme;

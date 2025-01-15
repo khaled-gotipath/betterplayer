@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:better_player/better_player.dart';
 import 'package:better_player/src/controls/better_player_clickable_widget.dart';
 import 'package:better_player/src/core/better_player_utils.dart';
@@ -440,7 +441,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
       color: isSelected
           ? betterPlayerControlsConfiguration.overflowModalTextColor
           : betterPlayerControlsConfiguration.overflowModalTextColor
-              .withOpacity(0.7),
+              .withAlpha(178),
     );
   }
 
