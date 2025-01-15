@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:better_player/better_player.dart';
 import 'package:better_player/src/configuration/better_player_controller_event.dart';
 import 'package:better_player/src/core/better_player_utils.dart';
@@ -578,14 +579,6 @@ class BetterPlayerController {
     }
   }
 
-  ///Method which is invoked when full screen changes.
-  Future<void> _onFullScreenStateChanged() async {
-    if (videoPlayerController?.value.isPlaying == true && !_isFullScreen) {
-      enterFullScreen();
-      videoPlayerController?.removeListener(_onFullScreenStateChanged);
-    }
-  }
-
   ///Enables full screen mode in player. This will trigger route change.
   void enterFullScreen() {
     _isFullScreen = true;
@@ -784,9 +777,6 @@ class BetterPlayerController {
     } else if (_wasInPipMode) {
       _postEvent(BetterPlayerEvent(BetterPlayerEventType.pipStop));
       _wasInPipMode = false;
-      if (!_wasInFullScreenBeforePiP) {
-        exitFullScreen();
-      }
       if (_wasControlsEnabledBeforePiP) {
         setControlsEnabled(true);
       }
@@ -1073,8 +1063,8 @@ class BetterPlayerController {
         _wasInFullScreenBeforePiP = _isFullScreen;
         await videoPlayerController?.enablePictureInPicture(
             left: 0, top: 0, width: 0, height: 0);
-        enterFullScreen();
         _postEvent(BetterPlayerEvent(BetterPlayerEventType.pipStart));
+        if (!isFullScreen) enterFullScreen();
         return;
       }
       if (Platform.isIOS) {
@@ -1290,7 +1280,6 @@ class BetterPlayerController {
     if (!_disposed) {
       if (videoPlayerController != null) {
         pause();
-        videoPlayerController!.removeListener(_onFullScreenStateChanged);
         videoPlayerController!.removeListener(_onVideoPlayerChanged);
         videoPlayerController!.dispose();
       }
