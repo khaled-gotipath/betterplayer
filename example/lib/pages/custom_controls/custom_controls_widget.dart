@@ -73,7 +73,7 @@ class _CustomControlsWidgetState extends State<CustomControlsWidget> {
                           Duration? videoDuration = await widget
                               .controller!.videoPlayerController!.position;
                           setState(() {
-                            if (widget.controller!.isPlaying()!) {
+                            if (widget.controller!.isPlaying()) {
                               Duration rewindDuration = Duration(
                                   seconds: (videoDuration!.inSeconds - 2));
                               if (rewindDuration <
@@ -94,14 +94,14 @@ class _CustomControlsWidgetState extends State<CustomControlsWidget> {
                       InkWell(
                         onTap: () {
                           setState(() {
-                            if (widget.controller!.isPlaying()!)
+                            if (widget.controller!.isPlaying())
                               widget.controller!.pause();
                             else
                               widget.controller!.play();
                           });
                         },
                         child: Icon(
-                          widget.controller!.isPlaying()!
+                          widget.controller!.isPlaying()
                               ? Icons.pause
                               : Icons.play_arrow,
                           color: Colors.white,
@@ -112,7 +112,7 @@ class _CustomControlsWidgetState extends State<CustomControlsWidget> {
                           Duration? videoDuration = await widget
                               .controller!.videoPlayerController!.position;
                           setState(() {
-                            if (widget.controller!.isPlaying()!) {
+                            if (widget.controller!.isPlaying()) {
                               Duration forwardDuration = Duration(
                                   seconds: (videoDuration!.inSeconds + 2));
                               if (forwardDuration >

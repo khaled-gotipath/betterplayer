@@ -920,7 +920,7 @@ class BetterPlayerController {
           _wasPlayingBeforePause ??= isPlaying();
           pause();
         } else {
-          if (_wasPlayingBeforePause == true && !isPlaying()!) {
+          if (_wasPlayingBeforePause == true && !isPlaying()) {
             play();
           }
         }
@@ -934,7 +934,7 @@ class BetterPlayerController {
       throw StateError("The data source has not been initialized");
     }
     final position = await videoPlayerController!.position;
-    final wasPlayingBeforeChange = isPlaying()!;
+    final wasPlayingBeforeChange = isPlaying();
     pause();
     await setupDataSource(betterPlayerDataSource!.copyWith(url: url));
     seekTo(position!);

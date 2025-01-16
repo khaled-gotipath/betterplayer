@@ -4,9 +4,13 @@
 package com.jhomlala.better_player
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.app.PictureInPictureParams
+import android.app.RemoteAction
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -409,7 +413,21 @@ class BetterPlayerPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
     private fun enablePictureInPicture(player: BetterPlayer) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             player.setupMediaSession(flutterState!!.applicationContext)
-            activity!!.enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+            activity!!.enterPictureInPictureMode(PictureInPictureParams.Builder()
+            // Disable all actions in PiP
+                .setActions(
+                    listOf(
+                        RemoteAction(
+                            Icon.createWithResource(activity,android.R.color.transparent),
+                            "",
+                            "",
+                            PendingIntent.getBroadcast(activity!!,69,
+                                Intent(), PendingIntent.FLAG_IMMUTABLE
+                            )
+                        )
+                    )
+                )
+                .build())
             startPictureInPictureListenerTimer(player)
             player.onPictureInPictureStatusChanged(true)
         }
