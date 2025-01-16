@@ -693,18 +693,14 @@ class BetterPlayerController {
   }
 
   ///Flag which determines whenever player is playing or not.
-  bool? isPlaying() {
-    if (videoPlayerController == null) {
-      throw StateError("The data source has not been initialized");
-    }
+  bool isPlaying() {
+    if (videoPlayerController == null) return false;
     return videoPlayerController!.value.isPlaying;
   }
 
   ///Flag which determines whenever player is loading video data or not.
-  bool? isBuffering() {
-    if (videoPlayerController == null) {
-      throw StateError("The data source has not been initialized");
-    }
+  bool isBuffering() {
+    if (videoPlayerController == null) return false;
     return videoPlayerController!.value.isBuffering;
   }
 
@@ -997,6 +993,9 @@ class BetterPlayerController {
   void setAppLifecycleState(AppLifecycleState appLifecycleState) {
     if (_isAutomaticPlayPauseHandled()) {
       _appLifecycleState = appLifecycleState;
+
+      if (videoPlayerController == null) return;
+
       if (appLifecycleState == AppLifecycleState.resumed) {
         if (_wasPlayingBeforePause == true && _isPlayerVisible) {
           play();
