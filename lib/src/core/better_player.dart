@@ -103,10 +103,12 @@ class _BetterPlayerState extends State<BetterPlayer>
     ///state.
     if (_isFullScreen) {
       _navigatorState.maybePop();
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
           overlays: _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
       SystemChrome.setPreferredOrientations(
-          _betterPlayerConfiguration.deviceOrientationsAfterFullScreen);
+        _betterPlayerConfiguration.deviceOrientationsAfterFullScreen ??
+            _defaultOrientations(context),
+      );
     }
 
     WidgetsBinding.instance.removeObserver(this);
@@ -212,7 +214,6 @@ class _BetterPlayerState extends State<BetterPlayer>
 
   Future<dynamic> _pushFullScreenWidget(BuildContext context) async {
     final TransitionRoute<void> route = PageRouteBuilder<void>(
-      settings: const RouteSettings(),
       pageBuilder: _fullScreenRoutePageBuilder,
     );
 
@@ -243,13 +244,25 @@ class _BetterPlayerState extends State<BetterPlayer>
     }
 
     await Navigator.of(context, rootNavigator: true).push(route);
-    _isFullScreen = false;
     widget.controller.exitFullScreen();
 
-    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
         overlays: _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
     await SystemChrome.setPreferredOrientations(
-        _betterPlayerConfiguration.deviceOrientationsAfterFullScreen);
+      _betterPlayerConfiguration.deviceOrientationsAfterFullScreen ??
+          _defaultOrientations(context),
+    );
+  }
+
+  List<DeviceOrientation> _defaultOrientations(BuildContext context) {
+    return [
+      if (MediaQuery.of(context).orientation == Orientation.landscape) ...{
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      },
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ];
   }
 
   Widget _buildPlayer() {

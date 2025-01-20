@@ -54,7 +54,7 @@ class BetterPlayerConfiguration {
   final List<SystemUiOverlay> systemOverlaysAfterFullScreen;
 
   /// Defines the set of allowed device orientations after exiting fullscreen
-  final List<DeviceOrientation> deviceOrientationsAfterFullScreen;
+  final List<DeviceOrientation>? deviceOrientationsAfterFullScreen;
 
   /// Defines a custom RoutePageBuilder for the fullscreen
   final BetterPlayerRoutePageBuilder? routePageBuilder;
@@ -132,12 +132,7 @@ class BetterPlayerConfiguration {
       DeviceOrientation.landscapeRight,
     ],
     this.systemOverlaysAfterFullScreen = SystemUiOverlay.values,
-    this.deviceOrientationsAfterFullScreen = const [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ],
+    this.deviceOrientationsAfterFullScreen,
     this.routePageBuilder,
     this.eventListener,
     this.subtitlesConfiguration = const BetterPlayerSubtitlesConfiguration(),
