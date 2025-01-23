@@ -107,7 +107,10 @@ class _BetterPlayerState extends State<BetterPlayer>
           overlays: _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
       SystemChrome.setPreferredOrientations(
         _betterPlayerConfiguration.deviceOrientationsAfterFullScreen ??
-            _defaultOrientations(context),
+            [
+              DeviceOrientation.portraitUp,
+              DeviceOrientation.portraitDown,
+            ],
       );
     }
 
@@ -256,19 +259,11 @@ class _BetterPlayerState extends State<BetterPlayer>
         overlays: _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
     await SystemChrome.setPreferredOrientations(
       _betterPlayerConfiguration.deviceOrientationsAfterFullScreen ??
-          _defaultOrientations(context),
+          [
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.portraitDown,
+          ],
     );
-  }
-
-  List<DeviceOrientation> _defaultOrientations(BuildContext context) {
-    return [
-      if (MediaQuery.of(context).orientation == Orientation.landscape) ...{
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      },
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ];
   }
 
   Widget _buildPlayer() {
